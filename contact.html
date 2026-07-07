@@ -10,26 +10,35 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
         body { font-family: 'Inter', sans-serif; }
+        .bg-auth-gradient {
+            background: radial-gradient(circle at top right, #fe2c55 0%, #25f4ee 100%);
+        }
     </style>
 </head>
 <body class="bg-[#0b0e11] text-gray-100 min-h-screen flex flex-col">
 
     <nav class="border-b border-gray-800 bg-[#0f1216]/95 backdrop-blur py-4 px-6 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <a href="index.html" class="flex items-center space-x-3 hover:opacity-80 transition">
-                <img src="https://i.imgur.com/lhVehwi.png" alt="Cut Nerd Logo" class="w-10 h-10 rounded-lg object-contain">
+            <a href="index.html" class="flex items-center space-x-3 group">
+                <img src="https://i.imgur.com/lhVehwi.png" alt="Cut Nerd Logo" class="w-10 h-10 rounded-lg object-contain group-hover:scale-110 transition">
                 <div>
                     <span class="text-xl font-bold tracking-tight block">Cut Nerd <span class="text-[#fe2c55]"></span></span>
                     <span class="text-[10px] text-gray-500">Portal de Notícias</span>
                 </div>
             </a>
-            <div class="hidden md:flex space-x-6 text-sm font-medium text-gray-400">
-                <a href="index.html" class="hover:text-white transition">Notícias</a>
+            <div class="hidden md:flex space-x-6 text-sm font-medium text-gray-400 items-center">
+                <a href="index.html#noticias" class="hover:text-white transition">Notícias</a>
                 <a href="dashboard.html" class="hover:text-white transition">Dashboard</a>
                 <a href="about.html" class="hover:text-white transition">Sobre</a>
                 <a href="contact.html" class="text-cyan-400">Contato</a>
-                <a href="terms.html" class="hover:text-white transition">Terms</a>
-                <a href="privacy.html" class="hover:text-white transition">Privacy</a>
+                <a href="terms.html" class="hover:text-white transition text-xs">Terms</a>
+                <a href="privacy.html" class="hover:text-white transition text-xs">Privacy</a>
+                <a href="post.html" class="hover:text-white transition text-xs">Publicar</a>
+                <a href="https://www.tiktok.com/v2/auth/authorize/?client_key=sbawwji7j70zzmfg2r&scope=user.info.basic,video.upload,video.publish&response_type=code&redirect_uri=https://cutnerd.github.io/callback.html&state=cutnerd_auth" 
+                   target="_blank"
+                   class="inline-flex items-center bg-auth-gradient hover:opacity-95 text-white font-bold py-2 px-4 rounded-lg transition text-xs">
+                     Autorizar
+                </a>
             </div>
         </div>
     </nav>
