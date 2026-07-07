@@ -3,123 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Publicar Vídeo | Cut Nerd News</title>
+    <title>Publicar Vídeo | Cut Nerd</title>
+    <link rel="icon" type="image/png" href="https://i.imgur.com/lhVehwi.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * { font-family: 'Inter', sans-serif; }
         body { background-color: #0a0a0f; color: #f8fafc; min-height: 100vh; }
-
-        /* Navbar igual ao site */
         nav { background: rgba(10,10,15,0.95); border-bottom: 1px solid rgba(255,255,255,0.06); }
         .logo-text { background: linear-gradient(90deg, #f43f5e, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .btn-autorizar { background: linear-gradient(90deg, #f43f5e, #06b6d4); border-radius: 8px; padding: 8px 20px; font-weight: 600; font-size: 14px; }
-
-        /* Background atmosférico igual ao index */
+        .bg-auth-gradient { background: radial-gradient(circle at top right, #fe2c55 0%, #25f4ee 100%); }
         .bg-atm { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
         .bg-atm::before { content:''; position:absolute; top:-200px; left:-200px; width:600px; height:600px; background: radial-gradient(circle, rgba(244,63,94,0.12) 0%, transparent 70%); }
         .bg-atm::after { content:''; position:absolute; bottom:-200px; right:-200px; width:600px; height:600px; background: radial-gradient(circle, rgba(6,182,212,0.10) 0%, transparent 70%); }
-
-        /* Card principal */
         .glass { background: rgba(20, 25, 40, 0.75); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.08); }
-
-        /* Upload area */
-        .upload-area { border: 2px dashed rgba(244,63,94,0.35); background: rgba(244,63,94,0.04); border-radius: 16px; transition: all 0.3s; cursor: pointer; max-width: 480px; margin: 0 auto; }
+        .upload-area { border: 2px dashed rgba(244,63,94,0.35); background: rgba(244,63,94,0.04); border-radius: 16px; transition: all 0.3s; cursor: pointer; max-width: 420px; margin: 0 auto; }
         .upload-area:hover, .upload-area.drag { border-color: #f43f5e; background: rgba(244,63,94,0.08); }
         .upload-area.has-file { border-color: #06b6d4; background: rgba(6,182,212,0.06); }
-
-        /* Input style */
-        input[type="text"], textarea {
-            background: rgba(15,20,35,0.6);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 10px;
-            color: #f8fafc;
-            padding: 12px 16px;
-            width: 100%;
-            font-size: 14px;
-            transition: border 0.2s;
-            outline: none;
-        }
-        input[type="text"]:focus, textarea:focus { border-color: rgba(244,63,94,0.5); }
-        input[type="text"]::placeholder, textarea::placeholder { color: rgba(148,163,184,0.5); }
-
-        /* Botão postar */
-        .btn-post {
-            background: linear-gradient(90deg, #f43f5e, #06b6d4);
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 16px;
-            padding: 16px;
-            width: 100%;
-            color: white;
-            border: none;
-            cursor: pointer;
-            transition: opacity 0.2s, transform 0.1s;
-        }
+        input[type="text"], input[type="password"], textarea { background: rgba(15,20,35,0.6); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; color: #f8fafc; padding: 12px 16px; width: 100%; font-size: 14px; transition: border 0.2s; outline: none; }
+        input[type="text"]:focus, input[type="password"]:focus, textarea:focus { border-color: rgba(244,63,94,0.5); }
+        input[type="text"]::placeholder, input[type="password"]::placeholder, textarea::placeholder { color: rgba(148,163,184,0.5); }
+        .btn-post { background: linear-gradient(90deg, #f43f5e, #06b6d4); border-radius: 12px; font-weight: 700; font-size: 16px; padding: 16px; width: 100%; color: white; border: none; cursor: pointer; transition: opacity 0.2s, transform 0.1s; }
         .btn-post:hover { opacity: 0.9; }
         .btn-post:active { transform: scale(0.98); }
         .btn-post:disabled { opacity: 0.4; cursor: not-allowed; }
-
-        /* Status */
         .status-box { border-radius: 12px; padding: 14px 18px; font-size: 14px; font-weight: 500; display: none; }
         .status-box.show { display: flex; align-items: center; gap: 10px; }
         .status-loading { background: rgba(6,182,212,0.12); border: 1px solid rgba(6,182,212,0.25); color: #06b6d4; }
         .status-success { background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.25); color: #22c55e; }
         .status-error { background: rgba(244,63,94,0.12); border: 1px solid rgba(244,63,94,0.25); color: #f43f5e; }
-
-        /* Spinner */
         .spinner { width: 18px; height: 18px; border: 2px solid rgba(6,182,212,0.3); border-top-color: #06b6d4; border-radius: 50%; animation: spin 0.8s linear infinite; flex-shrink: 0; }
         @keyframes spin { to { transform: rotate(360deg); } }
-
-        /* Token field — mostrar/ocultar */
         .token-wrap { position: relative; }
         .token-wrap input { padding-right: 44px; font-family: monospace; font-size: 13px; }
         .toggle-eye { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: rgba(148,163,184,0.6); }
         .toggle-eye:hover { color: #f43f5e; }
-
-        /* Progress bar */
         .progress-wrap { display: none; height: 4px; background: rgba(255,255,255,0.06); border-radius: 99px; overflow: hidden; margin-top: 8px; }
         .progress-wrap.show { display: block; }
         .progress-bar { height: 100%; background: linear-gradient(90deg, #f43f5e, #06b6d4); border-radius: 99px; width: 0%; transition: width 0.4s ease; }
-
-        /* Nav links */
         .nav-link { color: rgba(248,250,252,0.7); font-size: 14px; transition: color 0.2s; }
         .nav-link:hover { color: #f8fafc; }
-
-        /* Badge sandbox */
-        .badge-sandbox { background: rgba(234,179,8,0.15); border: 1px solid rgba(234,179,8,0.3); color: #eab308; font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 99px; letter-spacing: 0.05em; }
+        .badge-publish { background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.3); color: #22c55e; font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 99px; letter-spacing: 0.05em; }
     </style>
 </head>
 <body>
-
 <div class="bg-atm"></div>
-
-<!-- Navbar -->
-<nav class="fixed top-0 left-0 right-0 z-50 px-6 py-4">
-    <div class="max-w-6xl mx-auto flex items-center justify-between">
- <a href="index.html" class="flex items-center space-x-3 group">
-                <img src="https://i.imgur.com/lhVehwi.png" alt="Cut Nerd Logo" class="w-10 h-10 rounded-lg object-contain group-hover:scale-110 transition">
-                <div>
-                    <span class="text-xl font-bold tracking-tight block">Cut Nerd <span class="text-[#fe2c55]">News</span></span>
-                    <span class="text-[10px] text-gray-500">Portal de Notícias</span>
-                </div>
+<nav class="border-b border-gray-800 bg-[#0f1216]/95 backdrop-blur py-4 px-6 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+        <a href="index.html" class="flex items-center space-x-3 group">
+            <img src="https://i.imgur.com/lhVehwi.png" alt="Cut Nerd Logo" class="w-10 h-10 rounded-lg object-contain group-hover:scale-110 transition">
+            <div>
+                <span class="text-xl font-bold tracking-tight block">Cut Nerd <span class="text-[#fe2c55]"></span></span>
+                <span class="text-[10px] text-gray-500">Portal de Notícias</span>
+            </div>
+        </a>
+        <div class="hidden md:flex space-x-6 text-sm font-medium text-gray-400 items-center">
+            <a href="index.html#noticias" class="hover:text-white transition">Notícias</a>
+            <a href="dashboard.html" class="hover:text-white transition">Dashboard</a>
+            <a href="about.html" class="hover:text-white transition">Sobre</a>
+            <a href="contact.html" class="hover:text-white transition">Contato</a>
+            <a href="terms.html" class="hover:text-white transition text-xs">Terms</a>
+            <a href="privacy.html" class="hover:text-white transition text-xs">Privacy</a>
+            <a href="post.html" class="hover:text-white transition text-xs">Publicar</a>
+            <a href="https://www.tiktok.com/v2/auth/authorize/?client_key=sbawwji7j70zzmfg2r&scope=user.info.basic,video.upload,video.publish&response_type=code&redirect_uri=https://cutnerd.github.io/callback.html&state=cutnerd_auth" 
+               target="_blank"
+               class="inline-flex items-center bg-auth-gradient hover:opacity-95 text-white font-bold py-2 px-4 rounded-lg transition text-xs">
+                 Autorizar
             </a>
-        <div class="hidden md:flex items-center gap-8">
-            <a href="index.html" class="nav-link">Notícias</a>
-            <a href="dashboard.html" class="nav-link">Dashboard</a>
-            <a href="about.html" class="nav-link">Sobre</a>
-            <a href="contact.html" class="nav-link">Contato</a>
-            <a href="terms.html" class="nav-link">Terms</a>
-            <a href="callback.html" class="btn-autorizar">Autorizar</a>
         </div>
     </div>
 </nav>
-
-<!-- Conteúdo -->
-<main class="relative z-10 pt-32 pb-16 px-6">
+<main class="relative z-10 pt-12 pb-16 px-6">
     <div class="max-w-xl mx-auto">
-
-        <!-- Header -->
         <div class="mb-8">
             <div class="flex items-center gap-3 mb-3">
                 <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none">
@@ -127,48 +83,40 @@
                     <defs><linearGradient id="vid" x1="2" y1="2" x2="22" y2="22"><stop stop-color="#f43f5e"/><stop offset="1" stop-color="#06b6d4"/></linearGradient></defs>
                 </svg>
                 <h1 class="text-2xl font-bold">Publicar Vídeo</h1>
-                <span class="badge-sandbox">DEMO</span>
+                <span class="badge-publish">PUBLISH</span>
             </div>
-            <p class="text-slate-400 text-sm">Cole seu Access Token, selecione o vídeo e publique diretamente na plataforma.</p>
+            <p class="text-slate-400 text-sm">Cole seu Access Token, selecione o vídeo e publique diretamente na sua conta.</p>
         </div>
-
-        <!-- Card -->
         <div class="glass rounded-2xl p-6 shadow-2xl space-y-5">
-
-            <!-- Token -->
             <div>
                 <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Access Token</label>
                 <div class="token-wrap">
                     <input type="password" id="accessToken" placeholder="Cole aqui seu access_token...">
                     <button class="toggle-eye" onclick="toggleToken()" title="Mostrar/ocultar token">
-                        <svg id="eyeIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
                         </svg>
                     </button>
                 </div>
             </div>
-
-            <!-- Título -->
             <div>
                 <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Título / Legenda</label>
                 <textarea id="videoTitle" rows="2" placeholder="Digite a legenda do vídeo..."></textarea>
             </div>
-
-            <!-- Upload -->
             <div>
                 <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Vídeo</label>
-                <div class="upload-area p-5 text-center" id="uploadArea" onclick="document.getElementById('videoFile').click()">
+                <div class="upload-area p-6 text-center" id="uploadArea" onclick="document.getElementById('videoFile').click()">
                     <input type="file" id="videoFile" accept="video/*" class="hidden" onchange="onFileSelect(this)">
                     <div id="uploadPlaceholder">
-                        <svg class="w-7 h-7 mx-auto mb-2 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-8 h-8 mx-auto mb-2 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
                         </svg>
                         <p class="text-slate-400 text-sm font-medium">Clique para selecionar o vídeo</p>
                         <p class="text-slate-600 text-xs mt-1">MP4, MOV, AVI • Máx. 4GB</p>
                     </div>
                     <div id="uploadSelected" class="hidden">
-                        <svg class="w-7 h-7 mx-auto mb-2 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-8 h-8 mx-auto mb-2 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 10l4.553-2.069A1 1 0 0121 8.82v6.36a1 1 0 01-1.447.894L15 14M3 8a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z"/>
                         </svg>
                         <p class="text-cyan-400 text-sm font-semibold" id="fileName">—</p>
@@ -176,43 +124,25 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Status -->
-            <div class="status-box status-loading" id="statusBox">
-                <div class="spinner"></div>
-                <span id="statusText">Enviando vídeo...</span>
-            </div>
+            <div class="status-box" id="statusBox"></div>
             <div class="progress-wrap" id="progressWrap">
                 <div class="progress-bar" id="progressBar"></div>
             </div>
-
-            <!-- Botão -->
             <button class="btn-post" id="btnPost" onclick="postToTikTok()">
                 Publicar Vídeo →
             </button>
-
-            <p class="text-center text-xs text-slate-600">O vídeo será enviado para revisão antes de ser publicado</p>
-        </div>
-
-        <!-- Info -->
-        <div class="mt-6 glass rounded-xl p-4 flex gap-3">
-            <svg class="w-5 h-5 text-yellow-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-            </svg>
-            <p class="text-xs text-slate-400">No modo <strong class="text-yellow-400">Demo</strong>, o vídeo é enviado para revisão antes de ser publicado. Após aprovação, será postado diretamente.<br><span class="text-slate-500">In <strong class="text-yellow-400">Demo</strong> mode, the video is sent for review before publishing. After approval, it will be posted directly.</span></p>
+            <p class="text-center text-xs text-slate-600">O vídeo será publicado diretamente via OAuth 2.0</p>
         </div>
     </div>
 </main>
-
 <script>
-    // Mostrar/ocultar token
+    const WORKER_URL = 'https://aged-bird-e952.viniciusmabi31.workers.dev';
+
     function toggleToken() {
         const input = document.getElementById('accessToken');
-        const isPassword = input.type === 'password';
-        input.type = isPassword ? 'text' : 'password';
+        input.type = input.type === 'password' ? 'text' : 'password';
     }
 
-    // Seleção de arquivo
     function onFileSelect(input) {
         const file = input.files[0];
         if (!file) return;
@@ -229,7 +159,6 @@
         return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
     }
 
-    // Drag and drop
     const area = document.getElementById('uploadArea');
     area.addEventListener('dragover', e => { e.preventDefault(); area.classList.add('drag'); });
     area.addEventListener('dragleave', () => area.classList.remove('drag'));
@@ -246,21 +175,17 @@
         }
     });
 
-    // Status helper
     function setStatus(type, text) {
         const box = document.getElementById('statusBox');
         box.className = 'status-box show status-' + type;
-        const spinner = type === 'loading' ? '<div class="spinner"></div>' : 
-                        type === 'success' ? '<svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>' :
-                        '<svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>';
-        box.innerHTML = spinner + '<span>' + text + '</span>';
+        const icon = type === 'loading'
+            ? '<div class="spinner"></div>'
+            : type === 'success'
+            ? '<svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>'
+            : '<svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>';
+        box.innerHTML = icon + '<span>' + text + '</span>';
     }
 
-    function hideStatus() {
-        document.getElementById('statusBox').classList.remove('show');
-    }
-
-    // Publicar no TikTok
     async function postToTikTok() {
         const token = document.getElementById('accessToken').value.trim();
         const title = document.getElementById('videoTitle').value.trim();
@@ -268,71 +193,68 @@
         const file = fileInput.files[0];
 
         if (!token) { setStatus('error', 'Cole o Access Token antes de continuar.'); return; }
-        if (!file) { setStatus('error', 'Selecione um vídeo antes de continuar.'); return; }
+        if (!file)  { setStatus('error', 'Selecione um vídeo antes de continuar.'); return; }
 
         const btn = document.getElementById('btnPost');
+        const progressWrap = document.getElementById('progressWrap');
+        const progressBar  = document.getElementById('progressBar');
         btn.disabled = true;
+        progressWrap.classList.add('show');
+        progressBar.style.width = '10%';
 
         try {
-            // Step 1: Init upload
-            setStatus('loading', 'Iniciando upload...');
-            const progressWrap = document.getElementById('progressWrap');
-            const progressBar = document.getElementById('progressBar');
-            progressWrap.classList.add('show');
-            progressBar.style.width = '15%';
+            // Step 1: Init
+            setStatus('loading', 'Iniciando publicação...');
 
-            const initRes = await fetch('https://open.tiktokapis.com/v2/post/publish/inbox/video/init/', {
+            const initRes = await fetch(WORKER_URL + '/tiktok-init', {
                 method: 'POST',
-                headers: {
-                    'Authorization': 'Bearer ' + token,
-                    'Content-Type': 'application/json; charset=UTF-8'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    source_info: {
-                        source: 'FILE_UPLOAD',
-                        video_size: file.size,
-                        chunk_size: file.size,
-                        total_chunk_count: 1
-                    }
+                    token: token,
+                    video_size: file.size,
+                    title: title || 'Cut Nerd News'
                 })
             });
 
             const initData = await initRes.json();
 
             if (initData.error && initData.error.code !== 'ok') {
-                throw new Error(initData.error.message || 'Erro ao iniciar upload.');
+                throw new Error(initData.error.message || 'Erro ao iniciar publicação.');
             }
 
             const uploadUrl = initData.data?.upload_url;
-            const publishId = initData.data?.publish_id;
-
-            if (!uploadUrl) throw new Error('URL de upload não retornada pela API.');
+            if (!uploadUrl) throw new Error('URL de upload não retornada pelo TikTok.');
 
             progressBar.style.width = '35%';
             setStatus('loading', 'Enviando vídeo...');
 
-            // Step 2: Upload do arquivo
-            const uploadRes = await fetch(uploadUrl, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'video/mp4',
-                    'Content-Range': `bytes 0-${file.size - 1}/${file.size}`,
-                    'Content-Length': file.size
-                },
-                body: file
-            });
+            // Step 2: Upload
+            const contentType = file.type || 'video/mp4';
 
-            progressBar.style.width = '80%';
+            const uploadRes = await fetch(
+                WORKER_URL + '/tiktok-upload?upload_url=' + encodeURIComponent(uploadUrl),
+                {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': contentType,
+                        'Content-Range': `bytes 0-${file.size - 1}/${file.size}`,
+                        'Content-Length': String(file.size)
+                    },
+                    body: file
+                }
+            );
+
+            progressBar.style.width = '100%';
 
             if (!uploadRes.ok && uploadRes.status !== 206) {
                 throw new Error('Erro durante o envio do arquivo. Status: ' + uploadRes.status);
             }
 
-            progressBar.style.width = '100%';
-            setStatus('success', '✓ Vídeo enviado com sucesso!');
+            setStatus('success', '✓ Vídeo publicado com sucesso no TikTok!');
 
         } catch (err) {
             progressWrap.classList.remove('show');
+            progressBar.style.width = '0%';
             setStatus('error', err.message || 'Erro desconhecido. Verifique o token e tente novamente.');
         } finally {
             btn.disabled = false;
