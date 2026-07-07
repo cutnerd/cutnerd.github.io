@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Cut Nerd</title>
+    <link rel="icon" type="image/png" href="https://i.imgur.com/lhVehwi.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .stat-card {
+            background: linear-gradient(135deg, #15191e 0%, #1c2229 100%);
+        }
+        .chart-container {
+            position: relative;
+            height: 300px;
+        }
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body class="bg-[#0b0e11] text-gray-100 min-h-screen flex flex-col">
+
+    <nav class="border-b border-gray-800 bg-[#0f1216]/95 backdrop-blur py-4 px-6 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="index.html" class="flex items-center space-x-3 hover:opacity-80 transition">
+                <img src="https://i.imgur.com/lhVehwi.png" alt="Cut Nerd Logo" class="w-10 h-10 rounded-lg object-contain">
+                <div>
+                    <span class="text-xl font-bold tracking-tight block">Cut Nerd <span class="text-[#fe2c55]"></span></span>
+                    <span class="text-[10px] text-gray-500">Portal de Notícias</span>
+                </div>
+            </a>
+            <div class="hidden md:flex space-x-6 text-sm font-medium text-gray-400">
+                <a href="index.html" class="hover:text-white transition">Notícias</a>
+                <a href="dashboard.html" class="text-cyan-400">Dashboard</a>
+                <a href="about.html" class="hover:text-white transition">Sobre</a>
+                <a href="contact.html" class="hover:text-white transition">Contato</a>
+                <a href="terms.html" class="hover:text-white transition">Terms</a>
+                <a href="privacy.html" class="hover:text-white transition">Privacy</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow max-w-7xl mx-auto px-6 py-12 w-full">
+        <div class="mb-12">
+            <h1 class="text-5xl font-extrabold mb-2">
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-[#fe2c55] to-[#25f4ee]">
+                    Dashboard
+                </span>
+            </h1>
+            <p class="text-gray-400">Acompanhe as estatísticas de notícias em tempo real</p>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="grid md:grid-cols-4 gap-4 mb-8">
+            <div class="stat-card border border-gray-800 rounded-xl p-6 hover:border-[#fe2c55]/50 transition">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-sm font-semibold text-gray-400">Notícias Carregadas</h3>
+                    <i class="fa-solid fa-newspaper text-[#fe2c55] text-xl"></i>
+                </div>
+                <p class="text-3xl font-bold">100+</p>
+                <p class="text-xs text-gray-500 mt-2">Todas as categorias</p>
+            </div>
+
+            <div class="stat-card border border-gray-800 rounded-xl p-6 hover:border-cyan-400/50 transition">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-sm font-semibold text-gray-400">Categorias</h3>
+                    <i class="fa-solid fa-chart-pie text-cyan-400 text-xl"></i>
+                </div>
+                <p class="text-3xl font-bold">5</p>
+                <p class="text-xs text-gray-500 mt-2">Disponíveis</p>
+            </div>
+
+            <div class="stat-card border border-gray-800 rounded-xl p-6 hover:border-purple-500/50 transition">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-sm font-semibold text-gray-400">Fontes</h3>
+                    <i class="fa-solid fa-tower-broadcast text-purple-500 text-xl"></i>
+                </div>
+                <p class="text-3xl font-bold">50+</p>
+                <p class="text-xs text-gray-500 mt-2">Portais ativos</p>
+            </div>
+
+            <div class="stat-card border border-gray-800 rounded-xl p-6 hover:border-green-500/50 transition">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-sm font-semibold text-gray-400">Status</h3>
+                    <i class="fa-solid fa-circle text-green-500 text-xl pulse"></i>
+                </div>
+                <p class="text-3xl font-bold">Online</p>
+                <p class="text-xs text-gray-500 mt-2">Sistema ativo</p>
+            </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="grid md:grid-cols-2 gap-8 mb-8">
+            <div class="bg-[#15191e] border border-gray-800 rounded-xl p-6">
+                <h2 class="text-lg font-bold mb-4">Distribuição por Categoria</h2>
+                <div class="chart-container">
+                    <canvas id="categoryChart"></canvas>
+                </div>
+            </div>
+
+            <div class="bg-[#15191e] border border-gray-800 rounded-xl p-6">
+                <h2 class="text-lg font-bold mb-4">Notícias por Fonte</h2>
+                <div class="chart-container">
+                    <canvas id="sourcesChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info -->
+        <div class="bg-gradient-to-r from-[#fe2c55]/10 to-[#25f4ee]/10 border border-[#fe2c55]/20 rounded-2xl p-8 text-center">
+            <h3 class="text-lg font-bold mb-2">Sobre o Dashboard</h3>
+            <p class="text-gray-400">
+                Monitore em tempo real as estatísticas de notícias. Sistema com suporte a múltiplas categorias e fontes de notícias de qualidade.
+            </p>
+        </div>
+    </main>
+
+    <footer class="border-t border-gray-800 py-12 px-6 bg-[#0f1216] mt-12">
+        <div class="max-w-7xl mx-auto text-center">
+            <p class="text-gray-500 text-sm">© 2026 Cut Nerd | Dashboard</p>
+        </div>
+    </footer>
+
+    <script>
+        let chartInstances = {
+            category: null,
+            sources: null
+        };
+
+        const categoryData = {
+            'Tecnologia': 25,
+            'Negócios': 22,
+            'Entretenimento': 20,
+            'Esportes': 18,
+            'Geral': 15
+        };
+
+        const sourcesData = {
+            'G1': 8,
+            'Folha de S.Paulo': 7,
+            'O Globo': 6,
+            'Valor Econômico': 5,
+            'Extra': 4,
+            'Outros': 20
+        };
+
+        window.addEventListener('load', () => {
+            createCharts();
+        });
+
+        function createCharts() {
+            // Category Chart
+            const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+            if (chartInstances.category) chartInstances.category.destroy();
+
+            chartInstances.category = new Chart(categoryCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(categoryData),
+                    datasets: [{
+                        data: Object.values(categoryData),
+                        backgroundColor: [
+                            '#fe2c55',
+                            '#25f4ee',
+                            '#a78bfa',
+                            '#10b981',
+                            '#f59e0b'
+                        ],
+                        borderColor: '#1c2229',
+                        borderWidth: 3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { color: '#9ca3af', padding: 15 }
+                        }
+                    }
+                }
+            });
+
+            // Sources Chart
+            const sourcesCtx = document.getElementById('sourcesChart').getContext('2d');
+            if (chartInstances.sources) chartInstances.sources.destroy();
+
+            chartInstances.sources = new Chart(sourcesCtx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(sourcesData),
+                    datasets: [{
+                        label: 'Notícias',
+                        data: Object.values(sourcesData),
+                        backgroundColor: '#fe2c55',
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { ticks: { color: '#9ca3af' }, grid: { color: '#374151' } },
+                        y: { ticks: { color: '#9ca3af' }, grid: { display: false } }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>

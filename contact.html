@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contato | Cut Nerd</title>
+    <link rel="icon" type="image/png" href="https://i.imgur.com/lhVehwi.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-[#0b0e11] text-gray-100 min-h-screen flex flex-col">
+
+    <nav class="border-b border-gray-800 bg-[#0f1216]/95 backdrop-blur py-4 px-6 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="index.html" class="flex items-center space-x-3 hover:opacity-80 transition">
+                <img src="https://i.imgur.com/lhVehwi.png" alt="Cut Nerd Logo" class="w-10 h-10 rounded-lg object-contain">
+                <div>
+                    <span class="text-xl font-bold tracking-tight block">Cut Nerd <span class="text-[#fe2c55]"></span></span>
+                    <span class="text-[10px] text-gray-500">Portal de Notícias</span>
+                </div>
+            </a>
+            <div class="hidden md:flex space-x-6 text-sm font-medium text-gray-400">
+                <a href="index.html" class="hover:text-white transition">Notícias</a>
+                <a href="dashboard.html" class="hover:text-white transition">Dashboard</a>
+                <a href="about.html" class="hover:text-white transition">Sobre</a>
+                <a href="contact.html" class="text-cyan-400">Contato</a>
+                <a href="terms.html" class="hover:text-white transition">Terms</a>
+                <a href="privacy.html" class="hover:text-white transition">Privacy</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow max-w-4xl mx-auto px-6 py-12 w-full">
+        <!-- Header -->
+        <div class="text-center mb-12">
+            <div class="inline-block px-4 py-1 mb-6 border border-cyan-400/30 rounded-full bg-cyan-400/5 text-xs font-semibold text-cyan-400 uppercase tracking-widest">
+                <i class="fa-solid fa-envelope mr-2"></i>Contato
+            </div>
+            <h1 class="text-5xl font-extrabold mb-4">
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-[#fe2c55] to-[#25f4ee]">
+                    Entre em Contato
+                </span>
+            </h1>
+            <p class="text-gray-400 text-lg">Estamos aqui para ajudar</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8 mb-12">
+            <!-- Contact Info -->
+            <div class="space-y-6">
+                <div class="bg-[#15191e] border border-gray-800 rounded-2xl p-8">
+                    <h3 class="text-xl font-bold mb-6 flex items-center gap-3">
+                        <i class="fa-solid fa-circle-info text-[#fe2c55] text-2xl"></i>
+                        Informações
+                    </h3>
+                    <div class="space-y-4">
+                        <div>
+                            <p class="text-gray-500 text-sm uppercase font-semibold mb-1">Email Principal</p>
+                            <a href="mailto:viniciusnerdcut@gmail.com" class="text-lg font-bold text-white hover:text-[#fe2c55] transition">
+                                viniciusnerdcut@gmail.com
+                            </a>
+                        </div>
+                        <div>
+                            <p class="text-gray-500 text-sm uppercase font-semibold mb-1">Tempo de Resposta</p>
+                            <p class="text-white">Geralmente respondemos em até 24 horas</p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-r from-[#fe2c55]/10 to-[#25f4ee]/10 border border-[#fe2c55]/20 rounded-2xl p-8">
+                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-share text-cyan-400"></i>
+                        Siga-nos
+                    </h3>
+                    <div class="flex gap-4">
+                        <a href="https://www.instagram.com/cut.nerd/" target="_blank" class="inline-flex items-center justify-center w-12 h-12 bg-[#1c2229] border border-gray-700 rounded-lg hover:border-pink-500 text-gray-400 hover:text-pink-500 transition">
+                            <i class="fa-brands fa-instagram text-lg"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/vini31/" target="_blank" class="inline-flex items-center justify-center w-12 h-12 bg-[#1c2229] border border-gray-700 rounded-lg hover:border-blue-600 text-gray-400 hover:text-blue-600 transition">
+                            <i class="fa-brands fa-linkedin text-lg"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="bg-[#15191e] border border-gray-800 rounded-2xl p-8">
+                <h3 class="text-xl font-bold mb-6 flex items-center gap-3">
+                    <i class="fa-solid fa-message text-[#fe2c55] text-2xl"></i>
+                    Envie uma Mensagem
+                </h3>
+                <form id="contactForm" action="https://formspree.io/f/mkoaojdn" method="POST" class="space-y-4">
+                    <div>
+                        <label class="text-sm font-semibold text-gray-300 block mb-2">Seu Nome</label>
+                        <input type="text" name="name" placeholder="João Silva" required class="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 hover:border-gray-600 focus:border-[#fe2c55] outline-none transition">
+                    </div>
+                    <div>
+                        <label class="text-sm font-semibold text-gray-300 block mb-2">Email</label>
+                        <input type="email" name="email" placeholder="seu@email.com" required class="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 hover:border-gray-600 focus:border-[#fe2c55] outline-none transition">
+                    </div>
+                    <div>
+                        <label class="text-sm font-semibold text-gray-300 block mb-2">Assunto</label>
+                        <input type="text" name="subject" placeholder="Dúvida sobre a plataforma" required class="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 hover:border-gray-600 focus:border-[#fe2c55] outline-none transition">
+                    </div>
+                    <div>
+                        <label class="text-sm font-semibold text-gray-300 block mb-2">Mensagem</label>
+                        <textarea name="message" placeholder="Escreva sua mensagem aqui..." rows="5" required class="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 hover:border-gray-600 focus:border-[#fe2c55] outline-none transition resize-none"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-gradient-to-r from-[#fe2c55] to-[#25f4ee] hover:opacity-90 text-white font-bold py-3 rounded-lg transition">
+                        <i class="fa-solid fa-paper-plane mr-2"></i>
+                        Enviar Mensagem
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- FAQ -->
+        <div class="mb-12">
+            <h2 class="text-3xl font-bold mb-8">Perguntas Frequentes</h2>
+            <div class="space-y-4">
+                <details class="group bg-[#15191e] border border-gray-800 rounded-xl overflow-hidden">
+                    <summary class="flex items-center justify-between p-6 cursor-pointer hover:bg-gray-800/50 transition">
+                        <h3 class="font-bold">Como faço para compartilhar uma notícia?</h3>
+                        <i class="fa-solid fa-chevron-down group-open:rotate-180 transition"></i>
+                    </summary>
+                    <p class="px-6 pb-6 text-gray-300">Ao abrir qualquer notícia, você verá o botão "Compartilhar" que permite enviar a notícia via WhatsApp, Twitter, Facebook, LinkedIn ou copiar o link.</p>
+                </details>
+
+                <details class="group bg-[#15191e] border border-gray-800 rounded-xl overflow-hidden">
+                    <summary class="flex items-center justify-between p-6 cursor-pointer hover:bg-gray-800/50 transition">
+                        <h3 class="font-bold">Posso salvar notícias para ler depois?</h3>
+                        <i class="fa-solid fa-chevron-down group-open:rotate-180 transition"></i>
+                    </summary>
+                    <p class="px-6 pb-6 text-gray-300">Sim! Ao abrir uma notícia, clique no botão "Salvar" para adicionar à sua lista de notícias salvas. Elas ficarão armazenadas no seu navegador.</p>
+                </details>
+
+                <details class="group bg-[#15191e] border border-gray-800 rounded-xl overflow-hidden">
+                    <summary class="flex items-center justify-between p-6 cursor-pointer hover:bg-gray-800/50 transition">
+                        <h3 class="font-bold">Com que frequência as notícias são atualizadas?</h3>
+                        <i class="fa-solid fa-chevron-down group-open:rotate-180 transition"></i>
+                    </summary>
+                    <p class="px-6 pb-6 text-gray-300">As notícias são atualizadas em tempo real de acordo com as principais fontes de notícias. Você pode clicar no botão "Atualizar" para buscar as notícias mais recentes.</p>
+                </details>
+
+                <details class="group bg-[#15191e] border border-gray-800 rounded-xl overflow-hidden">
+                    <summary class="flex items-center justify-between p-6 cursor-pointer hover:bg-gray-800/50 transition">
+                        <h3 class="font-bold">Quais categorias estão disponíveis?</h3>
+                        <i class="fa-solid fa-chevron-down group-open:rotate-180 transition"></i>
+                    </summary>
+                    <p class="px-6 pb-6 text-gray-300">Oferecemos 5 categorias principais: Tecnologia, Negócios, Entretenimento, Esportes e Geral. Você pode filtrar as notícias por categoria na página inicial.</p>
+                </details>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="text-center">
+            <h3 class="text-2xl font-bold mb-4">Ainda tem dúvidas?</h3>
+            <p class="text-gray-400 mb-6">Envie uma mensagem para nosso email de suporte</p>
+            <a href="mailto:viniciusnerdcut@gmail.com" class="inline-flex items-center bg-auth-gradient hover:opacity-90 text-white font-bold py-3 px-8 rounded-lg transition">
+                <i class="fa-solid fa-envelope mr-2"></i>
+                Enviar Email
+            </a>
+        </div>
+    </main>
+
+    <footer class="border-t border-gray-800 py-12 px-6 bg-[#0f1216] mt-12">
+        <div class="max-w-7xl mx-auto text-center">
+            <p class="text-gray-500 text-sm">© 2026 Cut Nerd. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        if (window.location.search.includes('success')) {
+            const msg = document.createElement('div');
+            msg.className = 'fixed top-6 right-6 bg-green-500 text-white font-bold px-6 py-4 rounded-xl shadow-lg z-50';
+            msg.innerHTML = '<i class="fa-solid fa-check mr-2"></i>Mensagem enviada com sucesso!';
+            document.body.appendChild(msg);
+            setTimeout(() => msg.remove(), 4000);
+        }
+
+        const form = document.getElementById('contactForm');
+        if (form) {
+            form.addEventListener('submit', () => {
+                const btn = form.querySelector('button[type="submit"]');
+                if (btn) {
+                    btn.disabled = true;
+                    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i>Enviando...';
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>
